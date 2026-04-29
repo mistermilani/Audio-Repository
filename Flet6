@@ -20,8 +20,9 @@ def main(page: ft.Page):
         elif x == 4:
             x = 0
 
-        song.src = songs[x]
-        text.value = f"Now playing: {songs[x].strip("Audiofiles/")}"
+        song.src = list(songs.keys())[x]
+        text.value = f"Now playing: ♪ {song.src.strip("Audiofiles/")} ♪"
+        band.value = f"Album: {list(songs.values())[x]}"
 
     async def previous(e):
         nonlocal x
@@ -31,35 +32,39 @@ def main(page: ft.Page):
         elif x == -4:
             x = 0
         
-        song.src = songs[x]
-        text.value = f"Now playing: {songs[x].strip("Audiofiles/")}"
+        song.src = list(songs.keys())[x]
+        text.value = f"Now playing: ♪ {song.src.strip("Audiofiles/")} ♪"
+        band.value = f"Album: {list(songs.values())[x]}"
 
     #Page Setup
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.bgcolor = ft.Colors.TRANSPARENT
+    page.decoration = ft.BoxDecoration(image = ft.DecorationImage(src="https://wallpaper.dog/large/10740994.jpg", fit = ft.BoxFit.COVER))
 
     #Controls
-    songs = [
-        "Audiofiles/Creepy Nuts-Bling-Bang-Bang-Born.mp3",
-        "Audiofiles/Eve-Fight Song.mp3",
-        "Audiofiles/JAM Project-Seijaku-no-Apostle.mp3",
-        "Audiofiles/JAM Project-THE HERO.mp3",
-        "Audiofiles/Mrs. GREEN APPLE-Inferno.mp3"
-        ]
+    songs = {
+        "Audiofiles/Creepy Nuts-Bling-Bang-Bang-Born.mp3":"Legion",
+        "Audiofiles/Eve-Fight Song.mp3":"Smile",
+        "Audiofiles/JAM Project-Seijaku-no-Apostle.mp3":"(Single)",
+        "Audiofiles/JAM Project-THE HERO.mp3":"(Single)",
+        "Audiofiles/Mrs. GREEN APPLE-Inferno.mp3":"Antenna"
+    }
 
     playbutton = ft.Button(content = "Play", on_click = play)
     pausebutton = ft.Button(content = "Pause", on_click = pause)
     resumebutton = ft.Button(content = "Resume", on_click = resume)
     nextbutton = ft.Button(content = "Next song", on_click = next)
     previousbutton = ft.Button(content = "Previous song", on_click = previous)
-    name = f"{songs[x].strip("Audiofiles/")}"
+    name = list(songs.keys())[x].strip("Audiofiles/")
     name1 = name.strip(".mp3")
-    text = ft.Text(value = f"Now playing: {name1}")
+    text = ft.Text(value = f"Now playing: ♪ {name1} ♪", size = 40, color = ft.Colors.WHITE, weight = ft.FontWeight.BOLD)
+    band = ft.Text(value = f"Album: {list(songs.values())[x]}", size = 20, color = ft.Colors.WHITE, weight = ft.FontWeight.BOLD)
 
     row = ft.Row(controls = [playbutton, pausebutton, resumebutton])
     row2 = ft.Row(controls = [previousbutton, nextbutton])
 
-    song = fta.Audio(src = songs[x])
+    song = fta.Audio(src = list(songs.keys())[x])
 
-    page.add(text, row, row2)
+    page.add(text, band, row, row2)
 ft.run(main, assets_dir = "Audiofiles")
