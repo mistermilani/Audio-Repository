@@ -1,0 +1,65 @@
+import flet as ft
+import flet_audio as fta
+
+def main(page: ft.Page):
+    x = 0
+    #Functions
+    async def play(e):
+        await song.play()
+    
+    async def pause(e):
+        await song.pause()
+
+    async def resume(e):
+        await song.resume()
+
+    async def next(e):
+        nonlocal x
+        if x < 4:
+            x += 1
+        elif x == 4:
+            x = 0
+
+        song.src = songs[x]
+        text.value = f"Now playing: {songs[x].strip("Audiofiles/")}"
+
+    async def previous(e):
+        nonlocal x
+        if x > -4:
+            x -= 1
+
+        elif x == -4:
+            x = 0
+        
+        song.src = songs[x]
+        text.value = f"Now playing: {songs[x].strip("Audiofiles/")}"
+
+    #Page Setup
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
+    #Controls
+    songs = [
+        "Audiofiles/Creepy Nuts-Bling-Bang-Bang-Born.mp3",
+        "Audiofiles/Eve-Fight Song.mp3",
+        "Audiofiles/JAM Project-Seijaku-no-Apostle.mp3",
+        "Audiofiles/JAM Project-THE HERO.mp3",
+        "Audiofiles/Mrs. GREEN APPLE-Inferno.mp3"
+        ]
+
+    playbutton = ft.Button(content = "Play", on_click = play)
+    pausebutton = ft.Button(content = "Pause", on_click = pause)
+    resumebutton = ft.Button(content = "Resume", on_click = resume)
+    nextbutton = ft.Button(content = "Next song", on_click = next)
+    previousbutton = ft.Button(content = "Previous song", on_click = previous)
+    name = f"{songs[x].strip("Audiofiles/")}"
+    name1 = name.strip(".mp3")
+    text = ft.Text(value = f"Now playing: {name1}")
+
+    row = ft.Row(controls = [playbutton, pausebutton, resumebutton])
+    row2 = ft.Row(controls = [previousbutton, nextbutton])
+
+    song = fta.Audio(src = songs[x])
+
+    page.add(text, row, row2)
+ft.run(main, assets_dir = "Audiofiles")
