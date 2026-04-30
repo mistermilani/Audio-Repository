@@ -1,0 +1,1 @@
+The audios are quite loud so make sure to turn down the volume a bit. Also, there is one specific song that is quite lower in audio than the others; I thought it wasn't working because that song's audio was quite low, don't fall for the same mistake I did.
