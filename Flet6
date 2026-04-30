@@ -61,8 +61,8 @@ def main(page: ft.Page):
     text = ft.Text(value = f"Now playing: ♪ {name1} ♪", size = 40, color = ft.Colors.WHITE, weight = ft.FontWeight.BOLD)
     band = ft.Text(value = f"Album: {list(songs.values())[x]}", size = 20, color = ft.Colors.WHITE, weight = ft.FontWeight.BOLD)
 
-    row = ft.Row(controls = [playbutton, pausebutton, resumebutton])
-    row2 = ft.Row(controls = [previousbutton, nextbutton])
+    row = ft.Row(controls = [playbutton, pausebutton, resumebutton], alignment = ft.MainAxisAlignment.CENTER)
+    row2 = ft.Row(controls = [previousbutton, nextbutton], alignment = ft.MainAxisAlignment.CENTER)
 
     song = fta.Audio(src = list(songs.keys())[x])
 
